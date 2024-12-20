@@ -66,8 +66,28 @@ private object UndefinedNameReporter : ResultReporter {
     }
 }
 
+private object IndirectAssignmentReporter : ResultReporter {
+    override fun matchResult(result: Executor.Result) =
+        result.stdErr.contains("Indirect assignment is not supported yet:")
+
+    override fun report(input: String, result: Executor.Result) {
+        val report = buildString {
+            append("Input: $input\n")
+            append("Stdout: ${result.stdOut}\n")
+            append("Stderr: ${result.stdErr}\n\n")
+        }
+        Files.writeString(
+            Path.of("reports", "indirect-assignment.txt"),
+            report,
+            StandardOpenOption.APPEND,
+            StandardOpenOption.CREATE
+        )
+    }
+}
+
 val reporters = listOf<ResultReporter>(
     SyntaxErrorReporter,
     AlreadyDefinedReporter,
     UndefinedNameReporter,
+    IndirectAssignmentReporter,
 )

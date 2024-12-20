@@ -30,6 +30,7 @@ It found two different crashes of the compiler (saved in `crashes` directory)
   - Syntax error. Happens as I did not covered all legacy keywords, etc.
   - Already defined error. Happens as mutations did not have full context of the mutated hole.
   - Undefined error. Happens as mutations of patterns may remove some bindings which are used in branch body.
+  - Indirect assignment error. This bug is not easy to fix, so it is currently just an expected error of the compiler.
   These errors are not a problem, as they are happens quite rarely and immediately filtered out of population.
 - `mutators/RandGenerator`
   Randomly generates any type of node in ast up to some limited depth.
